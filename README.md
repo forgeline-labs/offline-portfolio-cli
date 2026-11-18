@@ -24,31 +24,26 @@ telemetry, and npm distribution.
 
 ## Quickstart
 
-Requires Python 3.12. No runtime dependencies, no installation step.
+Requires Python 3.12; no installation. Run from the repository root in a
+POSIX shell. The new checked-in `fixtures/portfolio.json` contains only
+fictitious data. Search is case-insensitive; an empty query exits 2.
+`python app` also works on native Windows; the `cat` and `echo $?`
+commands below use POSIX shell syntax.
 
 ```console
-$ cat portfolio.json
-{"profile":{"name":"Demo","bio":"Local"},"projects":[{"slug":"demo","title":"Demo","description":"Exemplo"}],"skills":["Python"]}
-
-$ python app show portfolio.json
-{"profile":{"name":"Demo","bio":"Local"},"projects":[{"slug":"demo","title":"Demo","description":"Exemplo"}],"skills":["Python"]}
-
-$ python app show portfolio.json --section skills
+$ cat fixtures/portfolio.json
+{"profile":{"name":"Demo","bio":"Local"},"projects":[{"slug":"demo","title":"Demo","description":"Example tool"}],"skills":["Python"]}
+$ python app show fixtures/portfolio.json
+{"profile":{"name":"Demo","bio":"Local"},"projects":[{"slug":"demo","title":"Demo","description":"Example tool"}],"skills":["Python"]}
+$ python app show fixtures/portfolio.json --section skills
 ["Python"]
-
-$ python app find portfolio.json exemplo
-[{"slug":"demo","title":"Demo","description":"Exemplo"}]
-
-$ python app find portfolio.json absent
-[]
-
-$ python app --version
-offline-portfolio-cli 0.1.0
+$ python app find fixtures/portfolio.json EXAMPLE
+[{"slug":"demo","title":"Demo","description":"Example tool"}]
+$ python app find fixtures/portfolio.json ""
+error: QUERY length is out of range
+$ echo $?
+2
 ```
-
-On POSIX the executable `./app` behaves exactly like `python app`. On Windows
-use `python app` or the `app.cmd` launcher, which forwards arguments (including
-paths with spaces) and the exit code.
 
 ## Input schema
 
